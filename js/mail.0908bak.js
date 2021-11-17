@@ -23,11 +23,11 @@ function sendMail(content, productType, flag) {
     nips: [
       // 'bmi.hcy@sofivagenomics.com.tw',
       "bmi.cfc@sofivagenomics.com.tw",
-      // "tklin@sofivagenomics.com.tw",
+      "tklin@sofivagenomics.com.tw",
       // "yichu@sofivagenomics.com.tw",
       // "tsuling@sofivagenomics.com.tw",
       // "nips@sofivagenomics.com.tw",
-      // "va@sofivagenomics.com.tw",
+      "va@sofivagenomics.com.tw",
       "jleung@sofivagenomics.com.tw"
     ],
     sg: [
@@ -43,12 +43,12 @@ function sendMail(content, productType, flag) {
     iona: [
       // 'bmi.hcy@sofivagenomics.com.tw',
       "bmi.cfc@sofivagenomics.com.tw",
-      // "tklin@sofivagenomics.com.tw",
-      // "yichu@sofivagenomics.com.tw",
-      // "tsuling@sofivagenomics.com.tw",
-      // "iona@sofivagenomics.com.tw",
-      // "yuchen@phoebusgenetics.com.tw",
-      "jleung@sofivagenomics.com.tw"
+      "tklin@sofivagenomics.com.tw",
+      "yichu@sofivagenomics.com.tw",
+      "tsuling@sofivagenomics.com.tw",
+      "iona@sofivagenomics.com.tw",
+      "yuchen@phoebusgenetics.com.tw",
+      "tehyang.hwa@sofivagenomics.com.tw"
     ]
   };
 
@@ -56,16 +56,10 @@ function sendMail(content, productType, flag) {
 
   //宣告發信物件
   let transporter = nodemailer.createTransport({
-    // service: "Gmail",
-    // auth: {
-    //   user: "sofiva.bmi@gmail.com",
-    //   pass: "zabvtgxrhahvjjqh"
-    // }
-    host: "smtp.gmail.com",
-    secure: false, // upgrade later with STARTTLS
+    service: "Gmail",
     auth: {
-      user: "bmi@sofivagenomics.com.tw",
-      pass: "sofiva6615"
+      user: "sofiva.bmi@gmail.com",
+      pass: "zabvtgxrhahvjjqh"
     }
   });
 
@@ -110,8 +104,6 @@ function filterSampleRun(sample, productType) {
   let newSampleRun;
   let newSampleRunArr = [];
   // console.log(sample);
-
-  const stepArr = { "nips": ["sequencedTime", "analyzedTime", "ondellTime", "convertedTime", "incloudTime","downloadedTime", "jobsubmittedTime", "jobcompletedTime", "backtodellTime"] };
 
   //default cut-off
   const cutOffSetttings = {
@@ -160,66 +152,7 @@ function filterSampleRun(sample, productType) {
     //To find without step name. If its not match with step, ignore it.
     if (key == "runid" || key == "closed" || key == "error" || key == "timeUsed" || key == "csvondellTime" || key == "csvtransmitTime") {
       continue;
-    } else if(key.match(/(.*)Start$/) && sample.closed != "1"){
-      let curStepTime = RegExp.$1 + "Time";
-      let preStepName = "";
-
-      for (let i = 0; i < stepArr.nips.length + 1; i++) {
-        if (sample[stepArr.nips[i]] === "00:00:30") {
-          if (i !== 0) {
-            preStepName = stepArr.nips[i - 1];
-            curStepTime = stepArr.nips[i];
-          } else if (i === 0) { 
-            preStepName = stepArr.nips[i];
-            curStepTime = stepArr.nips[i];
-          }
-          break;
-        }
-        
-      }
-      console.log(sample.runid,preStepName,curStepTime);
-      
-      // console.log(preStepName,curStepTime,sample.runid,RegExp.$1 + "Time");
-      if (preStepName !== curStepTime && RegExp.$1 + "Time" === curStepTime) {
-        // console.log(preStepName, curStepTime, sample.runid, RegExp.$1 + "Time");
-        const newstr = preStepName.replace(/Time/i, 'End');
-
-        const sampleYY = parseInt(sample[newstr].split(/[:-]/)[0]);
-        const sampleMM = parseInt(sample[newstr].split(/[:-]/)[1]);
-        const sampleDD = parseInt(sample[newstr].split(/[:-]/)[2]);
-        
-        const sampleHours = parseInt(sample[newstr].split(/[:-]/)[3]);
-        const sampleMins = parseInt(sample[newstr].split(/[:-]/)[4]);
-        const sampleSecs = parseInt(sample[newstr].split(/[:-]/)[5]);
-        // const totalSecs = sampleHours * 60 * 60 + sampleMins * 60 + sampleSecs;
-        const totalSecs = new Date(sampleYY, sampleMM - 1, sampleDD, sampleHours, sampleMins, sampleSecs).getTime();
-        const currSecs = new Date().getTime();
-        const cutOffTime = new Date(cutOffSetttings[productType][curStepTime] * 1000).toISOString().substr(11, 8);
-
-        // console.log(newstr, sample[newstr], currSecs, totalSecs, (currSecs - totalSecs) / 1000, cutOffSetttings[productType][curStepTime]);
-        // console.log(sampleYY, sampleMM - 1, sampleDD, sampleHours, sampleMins, sampleSecs);
-
-        if ((currSecs - totalSecs) / 1000 > cutOffSetttings[productType][curStepTime]) {
-          let curHHMMSS = getClock((currSecs - totalSecs) / 1000);
-          let runid = sample.runid;
-          let temp = {
-            [productType]: {
-              runid: runid,
-              node: key,
-              nodeTime: curHHMMSS,
-              totalTime: sample.totalTime,
-              alarmTime: cutOffTime,
-              count: 1
-            }
-          };
-          console.log(temp);
-          newSampleRun = JSON.stringify(temp);
-          newSampleRunArr.push(newSampleRun);
-
-        }
-      }
-    }
-    else if (key.match(/(.*)Time$/)) {
+    } else if (key.match(/(.*)Time$/)) {
       // console.log(sample[key], key);
 
       let sampleHours = parseInt(sample[key].split(":")[0]);
@@ -254,23 +187,6 @@ function filterSampleRun(sample, productType) {
     }
   }
   return newSampleRunArr;
-}
-
-function getClock(seconds) {
-  let newHours = Math.floor(seconds / 3600);
-  let newMins = Math.floor((seconds % 3600) / 60);
-  let newSeconds = (seconds % 3600) % 60;
-
-  if (newHours < 99) {
-    newHours = ("0" + newHours).slice(-2);
-  }
-  newMins = ("0" + newMins).slice(-2);
-  newSeconds = ("0" + newSeconds).slice(-2);
-
-  let clock = newHours + ":" + newMins + ":" + newSeconds;
-  // console.log(clock);
-
-  return clock;
 }
 
 /**
@@ -373,7 +289,7 @@ function compareMailContent(alertData, writeContent, productType, checkCount) {
           index + "_" + stepIndex;
       }
     }
-    // console.log("simpleAlertJSON:" + JSON.stringify(simpleAlertJSON));
+
     //比對將alertData跟writeContent是否不一樣
     for (let index = 0; index < writeContent.length; index++) {
       let temp = [];
@@ -390,7 +306,7 @@ function compareMailContent(alertData, writeContent, productType, checkCount) {
 
         //假如比對到一樣的話，parse alertDataJSON，並將alertDataJSON writeContentJSON的count+1，並stringtify回原來的陣列
         if (typeof simpleAlertJSON[simpleKeyName] !== "undefined") {
-          console.log("402",simpleKeyName,simpleAlertJSON[simpleKeyName]);
+          // console.log(simpleKeyName);
 
           let totalSteps = simpleAlertJSON[simpleKeyName].split("_");
           let alertDataJSON = JSON.parse(alertData[totalSteps[0]][totalSteps[1]]);
@@ -404,22 +320,17 @@ function compareMailContent(alertData, writeContent, productType, checkCount) {
 
           // console.log(simpleKeyName, alertData[index][stepIndex]);
         } else {
-          console.log("416",simpleKeyName);
           console.log(simpleAlertJSON[simpleKeyName]);
-          if (typeof simpleAlertJSON[simpleKeyName] !== "undefined") {
-            let totalSteps = simpleAlertJSON[simpleKeyName].split("_");
-            let alertDataJSON = JSON.parse(alertData[totalSteps[0]][totalSteps[1]]);
 
-            writeContentJSON[productType].count += 1;
-            writeContent[index][stepIndex] = JSON.stringify(writeContentJSON);
+          let totalSteps = simpleAlertJSON[simpleKeyName].split("_");
+          let alertDataJSON = JSON.parse(alertData[totalSteps[0]][totalSteps[1]]);
 
-            if (alertDataJSON[productType].count < 2) {
-              temp.push(JSON.stringify(writeContentJSON));
-            }
-            
+          writeContentJSON[productType].count += 1;
+          writeContent[index][stepIndex] = JSON.stringify(writeContentJSON);
+
+          if (alertDataJSON[productType].count < 2) {
+            temp.push(JSON.stringify(writeContentJSON));
           }
-
-          
         }
       }
       if (temp.length > 0) {
@@ -462,7 +373,7 @@ function compareMailContent(alertData, writeContent, productType, checkCount) {
 const webJSONListPath = {
   nips: "../NIPS/nips_progress_tail.json",
   // sg: "../SG/sg_progress_tail.json",
-  iona: "../IONA/iona_progress_tail.json"
+  // iona: "../IONA/iona_progress_tail.json"
 };
 
 let cron = require("node-cron");
@@ -475,11 +386,11 @@ const writeFile = (filename, content) => {
   fs.writeFile(filename, content, () => {});
 };
 let datetime = new Date();
-console.log("Before running a task every time - " + datetime);
+console.log("Before running a task every hour - " + datetime);
 
-cron.schedule("*/1 * * * *", function () {
-  // let datetime = new Date();
-  console.log("crontab running a task every time - " + datetime);
+cron.schedule("*/10 * * * *", function () {
+  let datetime = new Date();
+  console.log("crontab running a task every hour - " + datetime);
   data.nips = JSON.parse(fs.readFileSync(webJSONListPath.nips).toString());
   // data.sg = JSON.parse(fs.readFileSync(webJSONListPath.sg).toString());
   // data.iona = JSON.parse(fs.readFileSync(webJSONListPath.iona).toString());
