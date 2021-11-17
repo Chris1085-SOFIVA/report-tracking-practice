@@ -1,15 +1,15 @@
 const cutOffSetttings = {
   nips: {
-    totalTime: "09:39:57",
-    sequencedTime: "06:18:37",
-    analyzedTime: "02:08:11",
-    ondellTime: "00:00:00",
-    convertedTime: "00:00:00",
-    incloudTime: "02:05:59",
-    downloadedTime: "01:00:58",
-    jobsubmittedTime: "00:02:02",
-    jobcompletedTime: "00:19:14",
-    backtodellTime: "00:33:12",
+    totalTime: "11:23:03",
+    sequencedTime: "07:05:04",
+    analyzedTime: "03:46:22",
+    ondellTime: "00:23:05",
+    convertedTime: "00:04:51",
+    incloudTime: "00:03:09",
+    downloadedTime: "00:09:42",
+    jobsubmittedTime: "00:40:36",
+    jobcompletedTime: "00:12:05",
+    backtodellTime: "00:03:17",
   },
   iona: {
     totalTime: "16:20:15",
@@ -193,6 +193,9 @@ function movePseudoClock(productType, objectName) {
   let count = 0;
 
   for (let index = dataStorage.length - 12; index < dataStorage.length; index++) {
+    if (index < 0) {
+      index = 0;
+    }
     let timeClock = dataStorage[index][objectName];
     // console.log(dataStorage[index][objectName]);
 
@@ -518,7 +521,7 @@ function clickProgressIcon(product) {
     let collapaseContent = "Interval Time: 00:00:30";
 
 
-    // console.log(id, productType, sampleRunNumber);
+    console.log(id, productType, sampleRunNumber);
     $(this)
       .parents()
       .find("#collapseStepInfo" + id)
@@ -679,7 +682,7 @@ function getStatusDetail(progressContent = data, productTypeIndex = 1) {
   // console.log(productTypeIndex, data);
 
   let regexp = /(\d+)\/(\d+)/;
-
+  console.log(progressContent,productType[productTypeIndex]);
   progressContent.forEach(function (sampleRun, index) {
     let incloudNumber = 0;
     let downloadedNumber = 0;
@@ -687,18 +690,29 @@ function getStatusDetail(progressContent = data, productTypeIndex = 1) {
     let jobcompletedNumber = 0;
     sampleRun.jobsubmitted += "";
     sampleRun.jobcompleted += "";
-
-    if (sampleRun.incloud.match(regexp)) {
+    // console.log(sampleRun.incloud, index);
+    sampleRun.incloud = sampleRun.incloud.toString();
+    
+    if (sampleRun.incloud === "undefined"|| sampleRun.incloud === "1") {
+      incloudNumber = 2;
+    } else if (sampleRun.incloud.match(regexp)) {
+      
       //if incloud matched the run numbers
       // console.log(sampleRun.incloud.match(regexp));
       incloudNumber = sampleRun.incloud.match(regexp)[0];
+    } else {
+
+      incloudNumber = 1;
     }
 
+    sampleRun.downloaded = sampleRun.downloaded.toString();
     if (sampleRun.downloaded.match(regexp)) {
       //if downloaded matched the run numbers
       // console.log(sampleRun.downloaded.match(regexp));
       downloadedNumber = sampleRun.downloaded.match(regexp)[0];
       // console.log(downloadedNumber);
+    } else {
+      downloadedNumber = sampleRun.downloaded * 1;
     }
 
     if (sampleRun.jobsubmitted.match(regexp)) {

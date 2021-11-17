@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <title>NIPS Report-Tracking system</title>
+    <title>ctDNA Report-Tracking system</title>
 
     <link rel="stylesheet" href="../css/reset.css" />
     <link
@@ -103,7 +103,7 @@
               </div>
             </li>
             <li class="nav-item mr-auto">
-              <a class="nav-link" href="../ctDNA/index.html">Cancer <span class="sr-only"></span></a>
+              <a class="nav-link" href="../ctDNA/index.html">ctDNA <span class="sr-only"></span></a>
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0 pl-2">
@@ -124,17 +124,17 @@
 
     <div class="container" style="margin-top: 110px">
       <div class="banner pt-4">
-        <h1>癌症基因檢測即時追蹤系統</h1>
+        <h1>非侵入性產前染色體篩檢即時追蹤系統</h1>
         <div class="d-flex justify-content-between h-100 banner-time-content">
-          <h2 class="pt-2 sub-title">慧智基因醫學實驗室</h2>
-          <span class="nips-updatedTime" style="display: inline-flex; align-items: flex-end">Last Updated: </span>
+          <h2 class="pt-2 sub-title">慧智臨床基因醫學實驗室</h2>
+          <span class="iona-updatedTime" style="display: inline-flex; align-items: flex-end">Last Updated: </span>
         </div>
       </div>
 
       <div class="div-progress py-5">
         <div class="row content-header py-1">
           <div class="col-lg-4 content-header col-12 pb-2" id="content-header-name">
-            <h1 class="font-title"></h1>
+            <h1 class="font-title">ctDNA</h1>
           </div>
           <!-- <div class="col-lg-1 content-header col-6 text-right" id="content-header-time">
         </div> -->
@@ -151,7 +151,7 @@
         </div>
         <div class="row w-100 pt-2 d-flex justify-content-between content-info">
           <div class="col-lg-3 content-header col-6" id="content-header-name">
-            <!-- <h4 class="py-2 px-3"><strong>Case Number</strong></h4> -->
+            <h4 class="py-2 px-3"><strong>Case Number</strong></h4>
           </div>
           <div class="col-lg-1 content-header col-2" id="content-header-time">
             <h4 class=""><span class="badge badge-pill badge-dark py-2">Duration</span></h4>
@@ -159,11 +159,10 @@
           <div class="col-lg-8 col-12 content-progress-icon w-100">
             <table class="stepbar-progress">
               <tbody>
-                <tr class="">
+                <tr>
                   <td class="content-icon-item">
                     <div class="">
-                      <a class="glyphicon-step1 iconTitle" title="Sequenced"></a>
-                      <span class="iconTitle">Sequenced</span>
+                      <a class="glyphicon-step1"></a>
                     </div>
                   </td>
                   <td class="content-icon-progress">
@@ -173,8 +172,7 @@
                   </td>
                   <td class="content-icon-item">
                     <div class="">
-                      <a class="glyphicon-step2" title="Analyzed"></a>
-                      <span class="iconTitle">Analyzed</span>
+                      <a class="glyphicon-step2"></a>
                     </div>
                   </td>
                   <td class="content-icon-progress">
@@ -185,7 +183,6 @@
                   <td class="content-icon-item">
                     <div class="">
                       <a class="glyphicon-step3" title="Transferred to Dell"></a>
-                      <span class="iconTitle">Transferred to Dell</span>
                     </div>
                   </td>
                   <td class="content-icon-progress">
@@ -196,7 +193,6 @@
                   <td class="content-icon-item">
                     <div class="">
                       <a class="glyphicon-step4" title="Converted to Fastq"></a>
-                      <span class="iconTitle">Converted to Fastq</span>
                     </div>
                   </td>
                   <td class="content-icon-progress">
@@ -207,7 +203,6 @@
                   <td class="content-icon-item">
                     <div class="">
                       <a class="glyphicon-step5" title="Transferred to Cloud"></a>
-                      <span class="iconTitle">Transferred to Cloud</span>
                     </div>
                   </td>
                   <td class="content-icon-progress">
@@ -218,7 +213,6 @@
                   <td class="content-icon-item">
                     <div class="">
                       <a class="glyphicon-step6" title="Transferred to Comp.Node"></a>
-                      <span class="iconTitle">Transferred to Comp.Node</span>
                     </div>
                   </td>
                   <td class="content-icon-progress">
@@ -229,7 +223,6 @@
                   <td class="content-icon-item">
                     <div class="">
                       <a class="glyphicon-step7" title="Job submitted"></a>
-                      <span class="iconTitle">Job submitted</span>
                     </div>
                   </td>
                   <td class="content-icon-progress">
@@ -240,7 +233,6 @@
                   <td class="content-icon-item">
                     <div class="">
                       <a class="glyphicon-step8" title="Job completed"></a>
-                      <span class="iconTitle">Job completed</span>
                     </div>
                   </td>
                   <td class="content-icon-progress">
@@ -251,7 +243,6 @@
                   <td class="content-icon-item">
                     <div class="">
                       <a class="glyphicon-step9" title="Report Transferred to Dell"></a>
-                      <span class="iconTitle">Report Transferred to Dell</span>
                     </div>
                   </td>
                 </tr>
@@ -261,12 +252,12 @@
         </div>
         <div class="row row-sampleRun pt-2">
           <!-- <div class="py-3 row justify-content-between"> -->
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId0"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed0">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId0"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed0">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
           <!-- </div> -->
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId0">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId0">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -459,11 +450,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId1"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed1">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId1"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed1">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId1">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId1">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -656,11 +647,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId2"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed2">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId2"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed2">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId2">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId2">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -853,11 +844,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId3"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed3">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId3"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed3">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId3">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId3">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -1050,11 +1041,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId4"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed4">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId4"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed4">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId4">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId4">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -1247,11 +1238,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId5"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed5">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId5"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed5">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId5">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId5">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -1444,11 +1435,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId6"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed6">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId6"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed6">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId6">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId6">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -1641,11 +1632,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId7"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed7">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId7"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed7">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId7">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId7">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -1838,11 +1829,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId8"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed8">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId8"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed8">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId8">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId8">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -2035,11 +2026,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId9"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed9">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId9"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed9">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId9">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId9">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -2232,11 +2223,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId10"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed10">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId10"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed10">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId10">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId10">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -2429,11 +2420,11 @@
           </div>
         </div>
         <div class="row row-sampleRun pt-2">
-          <div class="col-lg-3 col-10 py-2 my-1 runID" id="nips-runId11"></div>
-          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="nips-timeUsed11">
+          <div class="col-lg-3 col-10 py-2 my-1 runID" id="ctdna-runId11"></div>
+          <div class="col-lg-1 col-2 py-2 d-flex justify-content-center duration-time" id="ctdna-timeUsed11">
             <h5 class=""><span class="badge badge-pill badge-dark py-2">00:00:00</span></h5>
           </div>
-          <div class="col-lg-8 col-12 py-2" id="nips-progressId11">
+          <div class="col-lg-8 col-12 py-2" id="ctdna-progressId11">
             <table class="stepbar-progress" data-current-step="sequenced" data-step-status="">
               <!-- <caption>First Step Pending</caption> -->
               <tbody>
@@ -2766,7 +2757,7 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
-
+    <!-- <script src="../node_modules/jquery/dist/jquery.js"></script> -->
     <script type="text/javascript" src="../js/all.js"></script>
   </body>
 </html>

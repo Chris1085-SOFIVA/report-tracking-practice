@@ -1,4 +1,4 @@
-let temp_dataArry = [];
+// let temp_dataArry = [];
 
 function calcStepDurationTime(data) {
 
@@ -97,85 +97,95 @@ function getClock(seconds) {
   return clock;
 }
 
-function compareContent(dataTypeContent, key) {
-  const fs = require("fs");
-  let path = "../temp_data/" + key + "_progress_tail.json.temp";
-  let webPath = "../" + key.toUpperCase() + "/" + key + "_progress_tail.json";
-  let stats = fs.statSync(path);
-  // console.log(stats.size);
-  let tempData = [];
-  let count = 0;
-  let newData = [];
-  let flag = 0;
-  let dataTypeContentstring = JSON.stringify(dataTypeContent);
-  const writeFile = (filename, content) => {
-    fs.writeFile(filename, content, () => {});
-  };
+// function compareContent(dataTypeContent, key) {
+//   const fs = require("fs");
+//   let path = "../temp_data/" + key + "_progress_tail.json.temp";
+//   let webPath = "../" + key.toUpperCase() + "/" + key + "_progress_tail.json";
+//   let stats = fs.statSync(path);
+//   // console.log(stats.size);
+//   let tempData = [];
+//   let count = 0;
+//   let newData = [];
+//   let flag = 0;
+//   let dataTypeContentstring = JSON.stringify(dataTypeContent);
+//   const writeFile = (filename, content) => {
+//     fs.writeFile(filename, content, () => {});
+//   };
 
-  tempData[key] = JSON.parse(fs.readFileSync(path).toString());
-  // console.log(tempData[key][0]);
-  if (fs.existsSync(path) && stats.size > 0) {
-    // console.log(path + " The file exists.");
-    tempData[key] = JSON.parse(fs.readFileSync(path).toString());
-    // console.log(tempData[key]);
-    for (let dataTypeIndex = 0; dataTypeIndex < dataTypeContent.length; dataTypeIndex++) {
-      for (let i = 0; i < tempData[key].length; i++) {
-        if (dataTypeContent[dataTypeIndex].runid == tempData[key][i].runid) {
-          // console.log(dataTypeContent[dataTypeIndex].runid);
+//   tempData[key] = JSON.parse(fs.readFileSync(path).toString());
+//   // console.log(tempData[key][0]);
+//   if (fs.existsSync(path) && stats.size > 0) {
+//     // console.log(path + " The file exists.");
+//     tempData[key] = JSON.parse(fs.readFileSync(path).toString());
+//     // console.log(tempData[key]);
+//     for (let dataTypeIndex = 0; dataTypeIndex < dataTypeContent.length; dataTypeIndex++) {
+//       for (let i = 0; i < tempData[key].length; i++) {
+//         if (dataTypeContent[dataTypeIndex].runid == tempData[key][i].runid) {
+//           // console.log(dataTypeContent[dataTypeIndex].runid);
 
-          newData[count] = tempData[key][i];
+//           newData[count] = tempData[key][i];
 
-          for (const stepItem in dataTypeContent[dataTypeIndex]) {
-            // console.log(dataTypeContent[i][stepItem]);
-            newData[count][stepItem] = dataTypeContent[dataTypeIndex][stepItem];
-          }
+//           for (const stepItem in dataTypeContent[dataTypeIndex]) {
+//             // console.log(dataTypeContent[i][stepItem]);
+//             newData[count][stepItem] = dataTypeContent[dataTypeIndex][stepItem];
+//           }
 
-          for (const timeItem in tempData[key][i]) {
-            if (timeItem.match(/,"(.*)Time":/)) {
-              newData[count][timeItem] = dataTypeContent[i][timeItem];
-            }
-          }
+//           for (const timeItem in tempData[key][i]) {
+//             if (timeItem.match(/,"(.*)Time":/)) {
+//               newData[count][timeItem] = dataTypeContent[i][timeItem];
+//             }
+//           }
 
-          count += 1;
-          flag = 1;
-          continue;
-        }
-      }
+//           count += 1;
+//           flag = 1;
+//           continue;
+//         }
+//       }
 
-      if (flag == 0) {
-        newData[count] = dataTypeContent[dataTypeIndex];
-        count += 1;
+//       if (flag == 0) {
+//         newData[count] = dataTypeContent[dataTypeIndex];
+//         count += 1;
 
-        // console.log("new Sample Run: " + newData[count]);
-      }
-      flag = 0;
-    }
-    // console.log(newData);
-  } else {
-    writeFile(path, dataTypeContentstring);
-    console.log(path + " not exists.");
-  }
-  // console.log(newData);
+//         // console.log("new Sample Run: " + newData[count]);
+//       }
+//       flag = 0;
+//     }
+//     // console.log(newData);
+//   } else {
+//     writeFile(path, dataTypeContentstring);
+//     console.log(path + " not exists.");
+//   }
+//   // console.log(newData);
 
-  return newData;
-}
+//   return newData;
+// }
 
 function getData(productType) {
   const MongoClient = require("mongodb").MongoClient;
   const url = "mongodb://192.168.228.18:27017/";
   let data;
-  // let temp_dataArry = [];
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
       if (err) throw err;
       let dbo = db.db("sofiva");
       let data = dbo.collection(productType).find().sort({ runid: -1 }).limit(12);
-
+      let temp_dataArry = [];
+      
+      dbo.collection('iona').deleteOne({
+        "runid": "vAuto_user_YG3-1270-IONA_Test_20200721-B"
+      });
       data.toArray().then((result) => {
 
         result.reverse().forEach((element) => {
-          if (element.closed !== 1) {
+          if (element.closed !== 1 && typeof element.sequencedStart != "undefined") {
             let nowSeconds = parseInt(new Date().getTime() / 1000);
+
+            if (typeof element.analyzedTime == "undefined") {
+              element.analyzedTime = "00:00:30";
+              element.analyzedStart = element.sequencedStart;
+              element.analyzedEnd = element.sequencedEnd;
+            }
+            
             let clockArray = element.sequencedStart.split(/[-:]/);
             const sequencedSeconds =
               new Date(
@@ -196,7 +206,9 @@ function getData(productType) {
             }
           }
 
-          temp_dataArry.push(calcStepDurationTime(element));
+          if (typeof element.sequencedStart != "undefined") { 
+            temp_dataArry.push(calcStepDurationTime(element));
+          }
         });
 
         db.close();
@@ -342,59 +354,16 @@ getData("nips").then((res) => {
 });
 
 
-// getData("iona").then((res) => {
-//   // console.log("123", res);
+getData("iona").then((res) => {
+  // console.log("123", res);
 
-//   writeFile(webJSONListPath.iona, JSON.stringify(res));
-//   writeFile(tempJSONListPath.iona, JSON.stringify(res));
-// });
+  writeFile(webJSONListPath.iona, JSON.stringify(res));
+  writeFile(tempJSONListPath.iona, JSON.stringify(res));
+});
 
-// console.log(data.nips);
+getData("ctdna").then((res) => {
+  // console.log("123", res);
 
-// writeFile(webJSONListPath.nips, JSON.stringify(data.nips));
-// writeFile(tempJSONListPath.nips, JSON.stringify(data.nips));
-
-// for (const key in data) {
-//   data[key] = compareContent(data[key], key);
-
-//   for (let i = 0; i < data[key].length; i++) {
-//     data[key][i] = calcStepDurationTime(data[key][i]);
-//   }
-
-//   if (JSON.stringify(data[key]) != "") {
-//     writeFile(webJSONListPath[key], JSON.stringify(data[key]));
-//     writeFile(tempJSONListPath[key], JSON.stringify(data[key]));
-//   }
-// }
-
-// let date = new Date();
-// dataValues = [
-//   date.getFullYear(),
-//   date.getMonth() + 1,
-//   date.getDate(),
-//   ('0' + date.getHours()).slice(-2),
-//   ('0' + date.getMinutes()).slice(-2),
-//   ('0' + date.getSeconds()).slice(-2)
-// ];
-
-// let time = new Date(year, month, day, hours, minutes, seconds);
-// console.log(
-//   dataValues[0] +
-//     '/' +
-//     dataValues[1] +
-//     '/' +
-//     dataValues[2] +
-//     ' ' +
-//     dataValues[3] +
-//     ':' +
-//     dataValues[4] +
-//     ':' +
-//     dataValues[5]
-// );
-
-// setTimeout(function (argument) {
-//   // execution time simulated with setTimeout function
-//   var end = new Date() - start;
-//   console.info('Execution time: %dms', end);
-// }, simulateTime);
-// console.log(fs.readFileSync("../NIPS/nips_progress_tail.json").toString());
+  writeFile(webJSONListPath.ctdna, JSON.stringify(res));
+  writeFile(tempJSONListPath.ctdna, JSON.stringify(res));
+});

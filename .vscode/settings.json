@@ -13,7 +13,10 @@
     "titleBar.inactiveForeground": "#e7e7e799",
     "statusBar.background": "#557c9b",
     "statusBarItem.hoverBackground": "#7295b1",
-    "statusBar.foreground": "#e7e7e7"
+    "statusBar.foreground": "#e7e7e7",
+    "sash.hoverBorder": "#7295b1",
+    "statusBarItem.remoteBackground": "#557c9b",
+    "statusBarItem.remoteForeground": "#e7e7e7"
   },
   "peacock.color": "#557c9b",
   "atlascode.jira.workingSite": {
